@@ -6,7 +6,7 @@ Wrong data: zhouji1994/datasets/widerface/1
 
 Fine tune check point: zhouji1994/datasets/widerface/1
 
-Correct data: zhouji1994/projects/processing-widerface/4/output
+Correct data: zhouji1994/datasets/correct-widerface-data/1
 
 TF Object Detection code: martinhoest/datasets/tf_models/1
 
@@ -17,14 +17,14 @@ TF Object Detection code: martinhoest/datasets/tf_models/1
 floyd login
 ```
 
-```
-floyd init '...'
-```
-
 ### For TrainingFiles_1
 
 ```
-floyd run --gpu --env tensorflow-1.5 --data zhouji1994/datasets/widerface/1:training --data martinhoest/datasets/tf_models/1:tf_models --tensorboard 'bash run.sh'
+cd TrainingFiles_1
+
+floyd init '...'
+
+floyd run --gpu --env tensorflow-1.5 --data zhouji1994/datasets/widerface/1:/training --data martinhoest/datasets/tf_models/1:/tf_models --tensorboard 'bash run.sh'
 ```
 
 ### For TrainingFiles_2
@@ -32,11 +32,15 @@ floyd run --gpu --env tensorflow-1.5 --data zhouji1994/datasets/widerface/1:trai
 #### Training
 
 ```
-floyd run --gpu --env tensorflow-1.5 --data zhouji1994/datasets/widerface/1:training --data martinhoest/datasets/tf_models/1:tf_models --data zhouji1994/projects/processing-widerface/4/output:/data --tensorboard 'bash run.sh'
+cd TrainingFiles_2
+
+floyd init '...'
+
+floyd run --gpu --env tensorflow-1.5 --data zhouji1994/datasets/widerface/1:/training --data martinhoest/datasets/tf_models/1:/tf_models --data zhouji1994/datasets/correct-widerface-data/1:/data --tensorboard 'bash run.sh'
 ```
 
 #### Eval
 
 ```
-floyd run --gpu --env tensorflow-1.5 --data zhouji1994/datasets/widerface/1:training --data martinhoest/datasets/tf_models/1:tf_models --data zhouji1994/projects/face-detection/27/output:model --data zhouji1994/projects/processing-widerface/4/output:/data --tensorboard 'bash run_eval.sh'
+floyd run --gpu --env tensorflow-1.5 --data zhouji1994/datasets/widerface/1:/training --data martinhoest/datasets/tf_models/1:/tf_models --data zhouji1994/projects/face-detection/27/output:/model --data zhouji1994/datasets/correct-widerface-data/1:/data --tensorboard 'bash run_eval.sh'
 ```
